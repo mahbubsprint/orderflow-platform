@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(kubectl get *)",
+      "Bash(kubectl describe *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl config current-context)",
+      "Bash(kind get *)"
+    ],
+    "ask": [
+      "Bash(kubectl apply *)",
+      "Bash(kubectl scale *)",
+      "Bash(kubectl rollout *)",
+      "Bash(kind create *)"
+    ],
+    "deny": [
+      "Bash(kubectl delete *)",
+      "Bash(kind delete *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(kubectl *)",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/kind-only.js\""
+          }
+        ]
+      }
+    ]
+  }
+}
