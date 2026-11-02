@@ -9,6 +9,15 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 - The user types key commands; explain, then verify.
 - Never start the next stage without approval.
 
+## Git workflow (real-world practice)
+- Each stage on its own branch: `stage/NN-name` (e.g. `stage/00-foundations`).
+- Open a PR to main, user reviews, then merge. Never commit stage work directly to main.
+- Conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`.
+- Stages 0-12 deploy by hand (kubectl). From Stage 13, deploy only via CI + GitOps.
+
+## Roles
+- Label every task with its owner: [Platform] (cluster, ingress, policies, pipelines) or [Dev] (app code, Dockerfile, app manifests/values).
+
 ## Cluster safety
 - Only use kind clusters. Context must start with `kind-`.
 - Run `kubectl config current-context` before any apply, scale, or delete.
@@ -16,9 +25,9 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 
 ## Docs
 - Plain, human language. Short sentences. Explain jargon once.
-- Every stage has stages/NN-name/README.md: goal, why, concepts, steps, break-it, checkpoint.
-- Update docs/learning-log.md at the end of each stage.
-- Record choices in docs/decisions/ (one page each).
+- One README per stage: stages/NN-name/README.md. No other doc files.
+- Headings: Goal, Why, Steps, Break it, What I learned (the user fills the last one).
+- Record important choices under "Why".
 
 ## Code and manifests
 - App: Node.js in app/. Containers run as non-root, multi-stage Dockerfile.
@@ -26,9 +35,9 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 - Prefer plain YAML until Stage 11 (Helm).
 
 ## Commands
-- Create cluster: kind create cluster --name orderflow --config stages/00-foundations/kind-config.yaml
+- Create cluster (Docker Desktop must be running): kind create cluster --config stages/00-foundations/kind-config.yaml
 - Delete cluster: kind delete cluster --name orderflow
 - Context: kind-orderflow
 
 ## Layout
-app/  stages/  docs/  .claude/
+app/  stages/  .claude/
