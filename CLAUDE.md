@@ -12,7 +12,9 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 ## Git workflow (real-world practice)
 - Each stage on its own branch: `stage/NN-name` (e.g. `stage/00-foundations`).
 - Open a PR to main, user reviews, then merge. Never commit stage work directly to main.
-- Conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`.
+- Branch names and commit messages must be human readable: plain English, no jargon or abbreviations.
+- Commit format: `type: plain-English summary` (`feat`, `fix`, `docs`, `chore`). Use `/commit` to commit.
+- Never add Co-Authored-By or other attribution lines to commits or PRs.
 - Stages 0-12 deploy by hand (kubectl). From Stage 13, deploy only via CI + GitOps.
 
 ## Roles
