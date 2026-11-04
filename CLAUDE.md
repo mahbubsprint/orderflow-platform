@@ -30,6 +30,7 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 - One README per stage: stages/NN-name/README.md. No other doc files.
 - Headings: Goal, Why, Steps, Break it, What I learned (the user fills the last one).
 - Record important choices under "Why".
+- List every command the user runs, in order, inside ```powershell code blocks.
 
 ## Code and manifests
 - App: Node.js in app/. Containers run as non-root, multi-stage Dockerfile.
