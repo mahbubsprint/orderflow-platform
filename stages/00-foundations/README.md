@@ -74,6 +74,29 @@ touching the wrong cluster by mistake.
 
 Rule: everyone talks only to the API server, never directly to each other.
 
+## kind vs kubectl vs docker
+
+| Tool | Talks to | Use it for |
+|---|---|---|
+| kind | Docker | Create or delete the whole cluster |
+| kubectl | The cluster (API server) | Everything inside the cluster: pods, deployments, services |
+| docker | Your machine's Docker | Build app images; peek at node containers |
+
+Restaurant view: kind builds or demolishes the restaurant, kubectl places orders
+with the manager, docker cooks ingredients (images) at home.
+
+| Task | Command |
+|---|---|
+| Create cluster | `kind create cluster` |
+| Delete cluster | `kind delete cluster` |
+| Build app image | `docker build` |
+| Load image into cluster | `kind load docker-image` |
+| Run, inspect, fix anything in the cluster | `kubectl ...` (90% of your time) |
+| Stop a node (Break it exercise) | `docker stop` (learning trick only) |
+
+In real companies kind is replaced by a cloud cluster (EKS, GKE, AKS);
+kubectl and docker are used the same way.
+
 ## Steps
 1. Install kind, then start Docker Desktop and check the engine is running:
    ```powershell
