@@ -75,22 +75,55 @@ touching the wrong cluster by mistake.
 Rule: everyone talks only to the API server, never directly to each other.
 
 ## Steps
-1. Install kind (done). Start Docker Desktop and wait for "Engine running"
-   (check with `docker info`).
+1. Install kind, then start Docker Desktop and check the engine is running:
+   ```powershell
+   winget install --id Kubernetes.kind --exact
+   docker info
+   ```
+   Install kubectl too. Docker Desktop ships an older one; kubectl must be
+   within 1 minor version of the cluster.
+   ```powershell
+   winget install --id Kubernetes.kubectl --exact
+   where.exe kubectl   # the WinGet path must be listed first
+   kubectl version     # client and server versions must match closely
+   ```
+   If the Docker path is listed first, add the WinGet kubectl folder to the
+   System PATH and move it above `C:\Program Files\Docker\Docker\resources\bin`.
 2. Create the cluster:
+   ```powershell
    kind create cluster --config stages/00-foundations/kind-config.yaml
-3. Check the nodes:
+   ```
+3. Check you are on the right cluster:
+   ```powershell
+   kind get clusters
+   kubectl config current-context   # must be kind-orderflow
+   kubectl cluster-info             # API server address
+   ```
+4. Check the nodes:
+   ```powershell
    kubectl get nodes -o wide
-4. Look at the system pods:
+   ```
+5. Look at the system pods (the control plane parts):
+   ```powershell
    kubectl get pods -n kube-system
-5. See the nodes as Docker containers:
+   ```
+6. See the nodes as Docker containers:
+   ```powershell
    docker ps
+   ```
+7. Cleanup (only when you want to remove the cluster):
+   ```powershell
+   kind delete cluster --name orderflow
+   ```
 
 ## Break it
 Stop one worker node, watch it become NotReady, then start it again.
-   docker stop orderflow-worker
-   kubectl get nodes
-   docker start orderflow-worker
+```powershell
+docker stop orderflow-worker
+kubectl get nodes          # wait ~40s: orderflow-worker becomes NotReady
+docker start orderflow-worker
+kubectl get nodes          # back to Ready
+```
 
 ## What I learned
 (You fill this in, in your own words.)
