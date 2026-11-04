@@ -35,9 +35,8 @@ Kubernetes (kind, local) · Node.js · Docker · kubectl · Helm (from Stage 5)
 Stage 0 in progress.
 
 ## Repo layout
-- `stages/` — one folder per stage, with a README, manifests and exercises
+- `stages/` — one folder per stage, with one README, manifests and exercises
 - `app/` — Node.js services
-- `docs/` — learning log and decision records
 - `CLAUDE.md`, `.claude/` — Claude Code project rules, permissions and safety hook
 
 ## Safety
