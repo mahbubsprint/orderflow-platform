@@ -7,7 +7,14 @@ Set up Claude Code rules and a local 3-node Kubernetes cluster.
 Every later stage runs on this cluster. The Claude rules keep us from
 touching the wrong cluster by mistake.
 
-## How Kubernetes works (restaurant view)
+- **kind** for the local cluster: multi-node, fast to create and delete, runs in Docker.
+- **3 nodes** (1 control plane, 2 workers): lets us see scheduling and node failure.
+- **Ports 80/443 mapped**: ready for Ingress in Stage 5.
+- **kubectl from winget**, not Docker Desktop's: Docker's copy was too old for the cluster.
+
+## Concepts
+
+### How Kubernetes works (restaurant view)
 
 | Kubernetes | Restaurant | Job |
 |---|---|---|
@@ -74,6 +81,45 @@ touching the wrong cluster by mistake.
 
 Rule: everyone talks only to the API server, never directly to each other.
 
+### kind vs kubectl vs docker
+
+| Tool | Talks to | Use it for |
+|---|---|---|
+| kind | Docker | Create or delete the whole cluster |
+| kubectl | The cluster (API server) | Everything inside the cluster: pods, deployments, services |
+| docker | Your machine's Docker | Build app images; peek at node containers |
+
+Restaurant view: kind builds or demolishes the restaurant, kubectl places orders
+with the manager, docker cooks ingredients (images) at home.
+
+| Task | Command |
+|---|---|
+| Create cluster | `kind create cluster` |
+| Delete cluster | `kind delete cluster` |
+| Build app image | `docker build` |
+| Load image into cluster | `kind load docker-image` |
+| Run, inspect, fix anything in the cluster | `kubectl ...` (90% of your time) |
+| Stop a node (Break it exercise) | `docker stop` (learning trick only) |
+
+In real companies kind is replaced by a cloud cluster (EKS, GKE, AKS);
+kubectl and docker are used the same way.
+
+### How kubectl finds the cluster
+```
+kubectl ──► reads ~/.kube/config ──► API server (inside the control-plane container)
+```
+The kubeconfig file holds the cluster address, credentials and current context.
+kind writes it when it creates the cluster. Context `kind-orderflow` = this cluster.
+
+### The kind config file
+`kind-config.yaml` describes the cluster:
+- `name: orderflow` gives context `kind-orderflow`.
+- `nodes`: one control-plane, two workers. Each node is a Docker container.
+- `extraPortMappings`: opens ports 80/443 on your machine into the cluster.
+- `apiVersion` is the config format version. It can change in new kind releases.
+  Kubernetes resources have their own versions (`v1`, `apps/v1`); check with
+  `kubectl api-resources`.
+
 ## Steps
 1. Install kind, then start Docker Desktop and check the engine is running:
    ```powershell
@@ -93,11 +139,14 @@ Rule: everyone talks only to the API server, never directly to each other.
    ```powershell
    kind create cluster --config stages/00-foundations/kind-config.yaml
    ```
+   Note: `failed to connect to the docker API ... dockerDesktopLinuxEngine` means
+   Docker Desktop is not running. Start it, wait for "Engine running", retry.
 3. Check you are on the right cluster:
    ```powershell
    kind get clusters
    kubectl config current-context   # must be kind-orderflow
    kubectl cluster-info             # API server address
+   kubectl config view --minify     # server address and context in use
    ```
 4. Check the nodes:
    ```powershell
