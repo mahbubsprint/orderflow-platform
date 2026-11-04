@@ -26,11 +26,8 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 - Never touch a non-kind context. Enforced by hook in .claude/hooks/.
 
 ## Docs
-- Plain, human language. Short sentences. Explain jargon once.
 - One README per stage: stages/NN-name/README.md. No other doc files.
-- Headings: Goal, Why, Steps, Break it, What I learned (the user fills the last one).
-- Record important choices under "Why".
-- List every command the user runs, in order, inside ```powershell code blocks.
+- Use the stage-docs skill to keep it updated. Never edit "What I learned".
 
 ## Code and manifests
 - App: Node.js in app/. Containers run as non-root, multi-stage Dockerfile.
