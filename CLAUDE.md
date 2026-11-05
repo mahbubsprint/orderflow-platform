@@ -31,7 +31,7 @@ Owner is a principal engineer learning by building. Roadmap: see stages/.
 
 ## Code and manifests
 - App: Node.js in app/. Containers run as non-root, multi-stage Dockerfile.
-- Manifests in stages/NN-name/manifests/. Always set labels, probes, resource requests/limits.
+- Manifests in stages/NN-name/manifests/. Always set labels. From Stage 4, also probes and resource requests/limits.
 - Prefer plain YAML until Stage 11 (Helm).
 
 ## Commands
