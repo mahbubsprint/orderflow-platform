@@ -13,9 +13,11 @@ Keep the current stage README complete, in plain human language.
 2. If the README does not exist, create it from [template.md](template.md).
 3. Read the README. Add only what is new. Never duplicate.
 4. Put each item under the right heading:
-   - **Commands** go under Steps, in the order the user runs them, inside ```powershell blocks,
-     with a short `# comment` saying what to expect.
-   - **Concepts and diagrams** go under Concepts. Use simple words or analogies
+   - **Commands** go under Steps, in the order the user runs them, inside ```powershell blocks.
+     Below each block add a table `| Command | What it does |` explaining every command
+     and every flag in plain words, plus what output to expect. No command goes unexplained.
+   - **Explanations tied to one step** go inside that step, before its commands.
+   - **General concepts and diagrams** (used across steps) go under Concepts. Use simple words or analogies
      (the project uses a restaurant analogy). Plain ASCII diagrams, no emojis.
    - **Choices** go under Why, one line each: what we chose and why.
    - **Problems and fixes** go as a note under the step where they happened.
