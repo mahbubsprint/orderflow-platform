@@ -15,10 +15,17 @@ Keep the current stage README complete, in plain human language.
 4. Put each item under the right heading:
    - **Commands** go under Steps, in the order the user runs them, inside ```powershell blocks.
      Below each block add a table `| Command | What it does |` explaining every command
-     and every flag in plain words, plus what output to expect. No command goes unexplained.
+     and every flag in plain words, plus what output to expect. No command goes unexplained,
+     including repeated ones (say what is different the 2nd time).
+     When a step has several goals, split it into named parts (**Part 1: <goal>**), each with
+     its own small command block and table. Never one long block mixing different goals.
+   - **YAML files** (manifests, configs): show the full file in the step, then a `| Line | Meaning |`
+     table covering every line. No field goes unexplained.
    - **Explanations tied to one step** go inside that step, before its commands.
    - **General concepts and diagrams** (used across steps) go under Concepts. Use simple words or analogies
      (the project uses a restaurant analogy). Plain ASCII diagrams, no emojis.
+   - **Answers to the user's questions** ("what happens if…", "why…") go in the step they
+     relate to, so the README works as study notes. Do this every time, without being asked.
    - **Choices** go under Why, one line each: what we chose and why.
    - **Problems and fixes** go as a note under the step where they happened.
    - **Exercises** that break something on purpose go under Break it.
