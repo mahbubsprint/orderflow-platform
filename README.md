@@ -21,6 +21,7 @@ Kubernetes (kind, local) · Node.js · Docker · kubectl · Helm (from Stage 5)
 | 4 | Probes, resource limits, graceful shutdown |
 | 5 | Ingress |
 | 6 | Postgres StatefulSet |
+| 6b | Database operations: replicas, failover, backups, connection pooling, Redis caching |
 | 7 | Split into services + event broker |
 | 8 | Retries, idempotency, dead-letter queue |
 | 9 | Autoscaling (HPA, KEDA) + load test |
@@ -32,7 +33,7 @@ Kubernetes (kind, local) · Node.js · Docker · kubectl · Helm (from Stage 5)
 | 15+ | AI features |
 
 ## Status
-Stage 0 in progress.
+Stages 0-1 done. Stage 2 in progress.
 
 ## Repo layout
 - `stages/` — one folder per stage, with one README, manifests and exercises
